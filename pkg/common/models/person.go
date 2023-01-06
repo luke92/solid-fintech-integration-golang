@@ -64,7 +64,7 @@ type ReviewReasons struct {
 	Fraud       []interface{} `json:"fraud"`
 }
 
-type IDVResponse struct {
+type IDV struct {
 	ID         string    `json:"id"`
 	URL        string    `json:"url"`
 	Status     string    `json:"status"`

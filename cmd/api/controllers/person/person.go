@@ -17,6 +17,8 @@ func RegisterRoutes(app fiber.Router, service solid.Service) {
 	routes := app.Group("/person")
 
 	routes.Post("/", h.AddPerson)
+	routes.Post("/:personid/kyc", h.SubmitKYC)
+	routes.Post("/:personid/idv", h.SubmitIDV)
 	//routes.Get("/:id", h.GetBook)
 	//routes.Put("/:id", h.UpdateBook)
 }

@@ -42,3 +42,67 @@ func (service *SolidService) AddPerson(person models.PersonDataPartial) (models.
 
 	return response, nil
 }
+
+func (service *SolidService) SubmitKYC(personID string) (models.KYC, error) {
+	errorctx := "submit-kyc-error"
+	var response models.KYC
+
+	relativeURL := fmt.Sprintf("/v1/person/%s/kyc", personID)
+	method := "POST"
+
+	input := sendRequestInput{
+		Method:      method,
+		RelativeURL: relativeURL,
+		PersonId:    personID,
+	}
+
+	output, err := service.sendRequest(input)
+	if err != nil {
+		fmt.Println(errorctx+"-send-request", err)
+		return response, err
+	}
+
+	if output.ErrorSolid != nil {
+		return response, output.ErrorSolid.ToError()
+	}
+
+	err = json.Unmarshal(output.Data, &response)
+	if err != nil {
+		fmt.Println(errorctx + "-parse-response")
+		return response, err
+	}
+
+	return response, nil
+}
+
+func (service *SolidService) SubmitIDV(personID string) (models.IDV, error) {
+	errorctx := "submit-idv-error"
+	var response models.IDV
+
+	relativeURL := fmt.Sprintf("/v1/person/%s/idv", personID)
+	method := "POST"
+
+	input := sendRequestInput{
+		Method:      method,
+		RelativeURL: relativeURL,
+		PersonId:    personID,
+	}
+
+	output, err := service.sendRequest(input)
+	if err != nil {
+		fmt.Println(errorctx+"-send-request", err)
+		return response, err
+	}
+
+	if output.ErrorSolid != nil {
+		return response, output.ErrorSolid.ToError()
+	}
+
+	err = json.Unmarshal(output.Data, &response)
+	if err != nil {
+		fmt.Println(errorctx + "-parse-response")
+		return response, err
+	}
+
+	return response, nil
+}

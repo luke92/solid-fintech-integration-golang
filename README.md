@@ -4,7 +4,7 @@ Integration with Solid Fintech
 # RUN
 make -f MakeFile
 
-## Configuration PORT and others
+## Configuration PORT and SOLID
 - pkg/common/config/envs/dev.env
 
 ## Documentation of Solid Fintech

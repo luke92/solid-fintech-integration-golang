@@ -12,6 +12,8 @@ import (
 
 type Service interface {
 	AddPerson(models.PersonDataPartial) (models.PersonDataFull, error)
+	SubmitKYC(personID string) (models.KYC, error)
+	SubmitIDV(personID string) (models.IDV, error)
 }
 
 type SolidService struct {
@@ -45,6 +47,9 @@ func (service *SolidService) sendRequest(input sendRequestInput) (sendRequestOut
 	}
 
 	url := service.BaseURL + input.RelativeURL
+
+	fmt.Printf("Request: %s : %s \n", input.Method, url)
+
 	request, err := http.NewRequest(input.Method, url, bytes.NewBuffer(input.Payload))
 	if err != nil {
 		fmt.Println("Error preparing request")
