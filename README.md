@@ -5,7 +5,14 @@ Integration with Solid Fintech
 make -f MakeFile
 
 ## Configuration PORT and SOLID
-- pkg/common/config/envs/dev.env
+- Create the file `dev.env` and save inside the folder `pkg/common/config/envs/`
+
+### File dev.env
+```
+PORT=:3000
+SOLID_ENV=https://test-api.solidfi.com
+SOLID_API_KEY=YOUR_API_KEY
+```
 
 ## Documentation of Solid Fintech
 https://www.solidfi.com/docs/dashboard
