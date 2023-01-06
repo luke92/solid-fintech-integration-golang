@@ -9,12 +9,13 @@ type handler struct {
 	service solid.Service
 }
 
-func RegisterRoutes(app *fiber.App, service solid.Service) {
+func RegisterRoutes(app fiber.Router, service solid.Service) {
 	h := &handler{
 		service: service,
 	}
 
 	routes := app.Group("/person")
+
 	routes.Post("/", h.AddPerson)
 	//routes.Get("/:id", h.GetBook)
 	//routes.Put("/:id", h.UpdateBook)

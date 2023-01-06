@@ -1,8 +1,6 @@
 package person
 
 import (
-	"encoding/json"
-
 	"github.com/gofiber/fiber/v2"
 	"github.com/luke92/solid-fintech-integration-golang/cmd/api/controllers"
 	"github.com/luke92/solid-fintech-integration-golang/pkg/common/models"
@@ -29,14 +27,5 @@ func (h handler) AddPerson(c *fiber.Ctx) error {
 		return c.Status(fiber.StatusInternalServerError).JSON(errResponse)
 	}
 
-	responseBody, err := json.Marshal(response)
-	if err != nil {
-		errResponse := controllers.ErrorResponse{
-			Title:   "add-person-parse-response",
-			Message: err.Error(),
-		}
-		return c.Status(fiber.StatusInternalServerError).JSON(errResponse)
-	}
-
-	return c.Status(fiber.StatusCreated).JSON(string(responseBody))
+	return c.Status(fiber.StatusCreated).JSON(response)
 }

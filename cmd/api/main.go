@@ -20,7 +20,19 @@ func main() {
 
 	service := solid.NewSolidService(c.SolidEnv, c.SolidAPIKey)
 
-	person.RegisterRoutes(app, service)
+	app.Get("/", func(c *fiber.Ctx) error {
+		return c.Status(fiber.StatusOK).JSON(fiber.Map{
+			"msg": "Service running.",
+		})
+	})
+
+	v1 := app.Group("/v1", func(c *fiber.Ctx) error {
+		c.Set("Content-Type", "application/json")
+		c.Set("Version", "v1")
+		return c.Next()
+	})
+
+	person.RegisterRoutes(v1, service)
 
 	err = app.Listen(c.Port)
 	if err != nil {
