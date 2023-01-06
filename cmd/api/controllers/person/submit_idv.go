@@ -5,7 +5,7 @@ import (
 	"github.com/luke92/solid-fintech-integration-golang/cmd/api/controllers"
 )
 
-func (h handler) SubmitIDV(c *fiber.Ctx) error {
+func (h handlerPerson) SubmitIDV(c *fiber.Ctx) error {
 	ctx := "submit-idv-handler"
 	personID := c.Params("personid")
 

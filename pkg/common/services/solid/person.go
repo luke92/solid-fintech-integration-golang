@@ -7,10 +7,10 @@ import (
 	"github.com/luke92/solid-fintech-integration-golang/pkg/common/models"
 )
 
-func (service *SolidService) AddPerson(person models.PersonDataPartial) (models.PersonDataFull, error) {
+func (service *SolidService) AddPerson(model models.PersonDataPartial) (models.PersonDataFull, error) {
 	relativeURL := "/v1/person"
 	method := "POST"
-	payload, err := json.Marshal(person)
+	payload, err := json.Marshal(model)
 	if err != nil {
 		fmt.Println("Error Add Person Solid - Parse Request", err)
 		return models.PersonDataFull{}, err

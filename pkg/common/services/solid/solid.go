@@ -10,12 +10,6 @@ import (
 	"github.com/luke92/solid-fintech-integration-golang/pkg/common/models"
 )
 
-type Service interface {
-	AddPerson(models.PersonDataPartial) (models.PersonDataFull, error)
-	SubmitKYC(personID string) (models.KYC, error)
-	SubmitIDV(personID string) (models.IDV, error)
-}
-
 type SolidService struct {
 	BaseURL string
 	APIKey  string

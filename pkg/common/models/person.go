@@ -3,16 +3,16 @@ package models
 import "time"
 
 type PersonDataPartial struct {
-	FirstName   string        `json:"firstName"`
-	MiddleName  string        `json:"middleName"`
-	LastName    string        `json:"lastName"`
-	Phone       string        `json:"phone"`
-	Email       string        `json:"email"`
-	DateOfBirth string        `json:"dateOfBirth"`
-	IDType      string        `json:"idType"`
-	IDNumber    string        `json:"idNumber"`
-	Address     PersonAddress `json:"address"`
-	Metadata    interface{}   `json:"metadata"`
+	FirstName   string      `json:"firstName"`
+	MiddleName  string      `json:"middleName"`
+	LastName    string      `json:"lastName"`
+	Phone       string      `json:"phone"`
+	Email       string      `json:"email"`
+	DateOfBirth string      `json:"dateOfBirth"`
+	IDType      string      `json:"idType"`
+	IDNumber    string      `json:"idNumber"`
+	Address     Address     `json:"address"`
+	Metadata    interface{} `json:"metadata"`
 }
 
 type PersonDataFull struct {
@@ -26,16 +26,6 @@ type PersonDataFull struct {
 	ModifiedAt    time.Time `json:"modifiedAt"`
 	Language      string    `json:"language"`
 	Status        string    `json:"status"`
-}
-
-type PersonAddress struct {
-	AddressType string `json:"addressType"`
-	Line1       string `json:"line1"`
-	Line2       string `json:"line2"`
-	City        string `json:"city"`
-	State       string `json:"state"`
-	Country     string `json:"country"`
-	PostalCode  string `json:"postalCode"`
 }
 
 type KYCResults struct {

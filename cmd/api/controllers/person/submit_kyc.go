@@ -5,7 +5,7 @@ import (
 	"github.com/luke92/solid-fintech-integration-golang/cmd/api/controllers"
 )
 
-func (h handler) SubmitKYC(c *fiber.Ctx) error {
+func (h handlerPerson) SubmitKYC(c *fiber.Ctx) error {
 	ctx := "submit-kyc-handler"
 	personID := c.Params("personid")
 
