@@ -18,6 +18,7 @@ const (
 	PersonStatusDeactivated PersonStatus = "deactivated" // (use to permanently block)
 )
 
+// Note: If KYC is not needed, the only fields that are required to create a person are firstName, lastName, phone, and email.
 type PersonDataPartial struct {
 	// 	first name of the person (max 100 chars)
 	FirstName string `json:"firstName"`

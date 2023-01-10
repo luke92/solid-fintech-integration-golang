@@ -4,6 +4,7 @@ import (
 	"github.com/gofiber/fiber/v2"
 	"github.com/luke92/solid-fintech-integration-golang/cmd/api/controllers/person/account"
 	"github.com/luke92/solid-fintech-integration-golang/cmd/api/controllers/person/family"
+	"github.com/luke92/solid-fintech-integration-golang/cmd/api/controllers/person/member"
 	"github.com/luke92/solid-fintech-integration-golang/pkg/common/services/solid"
 )
 
@@ -26,4 +27,5 @@ func RegisterRoutes(app fiber.Router, service solid.Service) {
 
 	family.RegisterRoutes(subRoutePersonID, service)
 	account.RegisterRoutes(subRoutePersonID, service)
+	member.RegisterRoutes(subRoutePersonID, service)
 }
