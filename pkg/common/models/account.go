@@ -5,12 +5,12 @@ import "time"
 type AccountType string
 
 const (
-	AccountTypeBusiness = "businessChecking"
-	AccountTypePersonal = "personalChecking"
-	AccountTypeCard     = "cardAccount"
-	AccountTypeClearing = "clearingAccount"
-	AccountTypeFallback = "fallbackAccount"
-	AccountTypeFunding  = "fundingAccount"
+	AccountTypeBusiness AccountType = "businessChecking"
+	AccountTypePersonal AccountType = "personalChecking" // Use this for Family Account
+	AccountTypeCard     AccountType = "cardAccount"
+	AccountTypeClearing AccountType = "clearingAccount"
+	AccountTypeFallback AccountType = "fallbackAccount"
+	AccountTypeFunding  AccountType = "fundingAccount"
 )
 
 type AccountConfigCardType struct {
@@ -21,6 +21,11 @@ type AccountConfigCardType struct {
 type AccountConfigCards struct {
 	Virtual  AccountConfigCardType `json:"virtual"`
 	Physical AccountConfigCardType `json:"physical"`
+}
+
+type AccountConfigOperationConfig struct {
+	Enabled bool `json:"enabled"`
+	SameDay bool `json:"sameDay"`
 }
 
 type AccountConfigOperation struct {
@@ -36,28 +41,10 @@ type AccountConfigOperation struct {
 	CrossBorder       AccountConfigOperationConfig `json:"crossBorder"`
 }
 
-type AccountConfigOperationConfig struct {
-	Enabled bool `json:"enabled"`
-	SameDay bool `json:"sameDay"`
-}
-
-type LimitsType struct {
-	Receive LimitsOperations `json:"receive"`
-	Send    LimitsOperations `json:"send"`
-}
-
 type LimitsAmount struct {
+	// Limit amount (Example json attribute "daily": "1000.00")
 	Daily   string `json:"daily"`
 	Monthly string `json:"monthly"`
-}
-
-type AccountConfig struct {
-	Card    AccountConfigCards     `json:"card"`
-	Send    AccountConfigOperation `json:"send"`
-	Receive AccountConfigOperation `json:"receive"`
-	Limits  LimitsType             `json:"limits"`
-	//FALBACK
-	//incoming
 }
 
 type LimitsOperations struct {
@@ -72,6 +59,34 @@ type LimitsOperations struct {
 	CrossBorder       LimitsAmount `json:"crossBorder"`
 }
 
+type LimitsType struct {
+	Receive LimitsOperations `json:"receive"`
+	Send    LimitsOperations `json:"send"`
+}
+
+type Fallback struct {
+	Received interface{} `json:"received"`
+}
+
+type AchPull struct {
+	Enabled            bool        `json:"enabled"`
+	AllowedOriginators interface{} `json:"allowedOriginators"`
+	BlockedOriginators interface{} `json:"blockedOriginators"`
+}
+
+type Incoming struct {
+	AchPull AchPull `json:"achPull"`
+}
+
+type AccountConfig struct {
+	Card     AccountConfigCards     `json:"card"`
+	Send     AccountConfigOperation `json:"send"`
+	Receive  AccountConfigOperation `json:"receive"`
+	Limits   LimitsType             `json:"limits"`
+	Fallback Fallback               `json:"fallback"`
+	Incoming Incoming               `json:"incoming"`
+}
+
 type AccountDataPartial struct {
 	FamilyID      string      `json:"familyId"`
 	Label         string      `json:"label"`
@@ -80,152 +95,45 @@ type AccountDataPartial struct {
 	Metadata      interface{} `json:"metadata"`
 }
 
+type AccountStatus string
+
+const (
+	AccountStatusActive        AccountStatus = "active"
+	AccountStatusDebitBlocked  AccountStatus = "debitBlocked"  // (debits frozen)
+	AccountStatusCreditBlocked AccountStatus = "creditBlocked" // (credits frozen)
+	AccountStatusBlocked       AccountStatus = "blocked"       // (both frozen)
+	AccountStatusClosed        AccountStatus = "closed"        // (permanently closed)
+)
+
 type AccountDataFull struct {
-	ID                       string    `json:"id"`
-	BusinessID               string    `json:"businessId"`
-	RoutingNumber            string    `json:"routingNumber"`
-	AccountNumber            string    `json:"accountNumber"`
-	Status                   string    `json:"status"`
-	ProgramID                string    `json:"programId"`
-	IsVerified               bool      `json:"isVerified"`
-	VerifiedAt               string    `json:"verifiedAt"`
-	Interest                 string    `json:"interest"`
-	Fees                     string    `json:"fees"`
-	Currency                 string    `json:"currency"`
-	AvailableBalance         string    `json:"availableBalance"`
-	SponsorBankName          string    `json:"sponsorBankName"`
-	CreatedAt                time.Time `json:"createdAt"`
-	ModifiedAt               time.Time `json:"modifiedAt"`
-	PendingDebit             string    `json:"pendingDebit"`
-	PendingCredit            string    `json:"pendingCredit"`
-	CreatedPersonID          string    `json:"createdPersonId"`
-	AccountInterestFrequency string    `json:"accountInterestFrequency"`
-	Config                   struct {
-		Card struct {
-			Virtual struct {
-				Enabled bool   `json:"enabled"`
-				Count   string `json:"count"`
-			} `json:"virtual"`
-			Physical struct {
-				Enabled bool   `json:"enabled"`
-				Count   string `json:"count"`
-			} `json:"physical"`
-		} `json:"card"`
-		Send struct {
-			Intrabank struct {
-				Enabled bool `json:"enabled"`
-			} `json:"intrabank"`
-			Ach struct {
-				Enabled bool `json:"enabled"`
-				SameDay bool `json:"sameDay"`
-			} `json:"ach"`
-			Wire struct {
-				Enabled bool `json:"enabled"`
-			} `json:"wire"`
-			Check struct {
-				Enabled bool `json:"enabled"`
-			} `json:"check"`
-			Card struct {
-				Enabled bool `json:"enabled"`
-			} `json:"card"`
-			DebitCard struct {
-				Enabled bool `json:"enabled"`
-			} `json:"debitCard"`
-			InternationalWire struct {
-				Enabled bool `json:"enabled"`
-			} `json:"internationalWire"`
-			DigitalCheck struct {
-				Enabled bool `json:"enabled"`
-			} `json:"digitalCheck"`
-			PhysicalCard struct {
-				Enabled bool `json:"enabled"`
-			} `json:"physicalCard"`
-			CrossBorder struct {
-				Enabled bool `json:"enabled"`
-			} `json:"crossBorder"`
-		} `json:"send"`
-		Receive struct {
-			Intrabank struct {
-				Enabled bool `json:"enabled"`
-			} `json:"intrabank"`
-			Ach struct {
-				Enabled bool `json:"enabled"`
-				SameDay bool `json:"sameDay"`
-			} `json:"ach"`
-			Check struct {
-				Enabled bool `json:"enabled"`
-			} `json:"check"`
-			DebitCard struct {
-				Enabled bool `json:"enabled"`
-			} `json:"debitCard"`
-		} `json:"receive"`
-		Limits struct {
-			Receive struct {
-				Daily     string `json:"daily"`
-				Monthly   string `json:"monthly"`
-				Intrabank struct {
-					Daily   string `json:"daily"`
-					Monthly string `json:"monthly"`
-				} `json:"intrabank"`
-				Ach struct {
-					Daily   string `json:"daily"`
-					Monthly string `json:"monthly"`
-				} `json:"ach"`
-				Check struct {
-					Daily   string `json:"daily"`
-					Monthly string `json:"monthly"`
-				} `json:"check"`
-				DebitCard struct {
-					Daily   string `json:"daily"`
-					Monthly string `json:"monthly"`
-				} `json:"debitCard"`
-			} `json:"receive"`
-			Send struct {
-				Daily     string `json:"daily"`
-				Monthly   string `json:"monthly"`
-				Intrabank struct {
-					Daily   string `json:"daily"`
-					Monthly string `json:"monthly"`
-				} `json:"intrabank"`
-				Ach struct {
-					Daily   string `json:"daily"`
-					Monthly string `json:"monthly"`
-				} `json:"ach"`
-				DomesticWire struct {
-					Daily   string `json:"daily"`
-					Monthly string `json:"monthly"`
-				} `json:"domesticWire"`
-				InternationalWire struct {
-					Daily   string `json:"daily"`
-					Monthly string `json:"monthly"`
-				} `json:"internationalWire"`
-				Check struct {
-					Daily   string `json:"daily"`
-					Monthly string `json:"monthly"`
-				} `json:"check"`
-				Card struct {
-					Daily   string `json:"daily"`
-					Monthly string `json:"monthly"`
-				} `json:"card"`
-				DebitCard struct {
-					Daily   string `json:"daily"`
-					Monthly string `json:"monthly"`
-				} `json:"debitCard"`
-				CrossBorder struct {
-					Daily   string `json:"daily"`
-					Monthly string `json:"monthly"`
-				} `json:"crossBorder"`
-			} `json:"send"`
-		} `json:"limits"`
-		Fallback struct {
-			Received interface{} `json:"received"`
-		} `json:"fallback"`
-		Incoming struct {
-			AchPull struct {
-				Enabled            bool        `json:"enabled"`
-				AllowedOriginators interface{} `json:"allowedOriginators"`
-				BlockedOriginators interface{} `json:"blockedOriginators"`
-			} `json:"achPull"`
-		} `json:"incoming"`
-	} `json:"config"`
+	AccountDataPartial
+	ID         string `json:"id"`
+	BusinessID string `json:"businessId"`
+	// 	9 digit routing number of the bank account
+	RoutingNumber string `json:"routingNumber"`
+	// 	16 digit account number of the bank account
+	AccountNumber string        `json:"accountNumber"`
+	Status        AccountStatus `json:"status"`
+	ProgramID     string        `json:"programId"`
+	IsVerified    bool          `json:"isVerified"`
+	VerifiedAt    string        `json:"verifiedAt"`
+	// 	interest percentage if an interest earning account
+	Interest string `json:"interest"`
+	// fees charged per month if it is a fee based account
+	Fees string `json:"fees"`
+	// 	currency of the bank account, currently supported: - USD
+	Currency string `json:"currency"`
+	// available balance in the bank account
+	AvailableBalance string    `json:"availableBalance"`
+	SponsorBankName  string    `json:"sponsorBankName"`
+	CreatedAt        time.Time `json:"createdAt"`
+	ModifiedAt       time.Time `json:"modifiedAt"`
+	// pending debits (money going out) from the bank account
+	PendingDebit string `json:"pendingDebit"`
+	// pending credits (money coming in) in to the bank account
+	PendingCredit   string `json:"pendingCredit"`
+	CreatedPersonID string `json:"createdPersonId"`
+	// frequency at which interest is paid out (if any)
+	AccountInterestFrequency string        `json:"accountInterestFrequency"`
+	Config                   AccountConfig `json:"config"`
 }

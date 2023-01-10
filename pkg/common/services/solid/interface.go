@@ -12,4 +12,8 @@ type Service interface {
 	// Family
 
 	AddFamily(personID string, model models.FamilyDataPartial) (models.FamilyDataFull, error)
+
+	// Account
+
+	AddAccount(personID string, model models.AccountDataPartial) (models.AccountDataFull, error)
 }

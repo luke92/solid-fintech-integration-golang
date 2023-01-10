@@ -8,7 +8,7 @@ import (
 
 func (h handlerAccount) AddAccount(c *fiber.Ctx) error {
 	personID := c.Params("personid")
-	body := models.FamilyDataPartial{}
+	body := models.AccountDataPartial{}
 
 	// parse body, attach to AddBookRequestBody struct
 	if err := c.BodyParser(&body); err != nil {
@@ -19,7 +19,7 @@ func (h handlerAccount) AddAccount(c *fiber.Ctx) error {
 		return c.Status(fiber.StatusBadRequest).JSON(errResponse)
 	}
 
-	response, err := h.service.AddFamily(personID, body)
+	response, err := h.service.AddAccount(personID, body)
 	if err != nil {
 		errResponse := controllers.ErrorResponse{
 			Title:   "add-person-service",

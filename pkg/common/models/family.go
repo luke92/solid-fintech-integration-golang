@@ -10,12 +10,21 @@ type FamilyDataPartial struct {
 	Metadata interface{} `json:"metadata"`
 }
 
+type FamilyStatus string
+
+const (
+	FamilityStatusActive      FamilyStatus = "active"
+	FamilityStatusInactive    FamilyStatus = "inactive"
+	FamilityStatusDormant     FamilyStatus = "dormant"
+	FamilityStatusDeactivated FamilyStatus = "deactivated"
+)
+
 type FamilyDataFull struct {
 	ID string `json:"id"`
 	FamilyDataPartial
-	ProgramID       string    `json:"programId"`
-	CreatedPersonID string    `json:"createdPersonId"`
-	Status          string    `json:"status"`
-	CreatedAt       time.Time `json:"createdAt"`
-	ModifiedAt      time.Time `json:"modifiedAt"`
+	ProgramID       string       `json:"programId"`
+	CreatedPersonID string       `json:"createdPersonId"`
+	Status          FamilyStatus `json:"status"`
+	CreatedAt       time.Time    `json:"createdAt"`
+	ModifiedAt      time.Time    `json:"modifiedAt"`
 }
