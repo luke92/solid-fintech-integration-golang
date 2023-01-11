@@ -24,4 +24,7 @@ type Service interface {
 	// CARD
 
 	AddCard(personID string, model models.NewCard) (models.CardDataFull, error)
+	ActivateCard(personID string, cardID string, model models.ExpireAndLast4CardData) (models.ActivateCardResponse, error)
+	CreatePinTokenCard(personID string, cardID string) (models.CreateCardPinTokenResponse, error)
+	CreateShowTokenCard(personID string, cardID string) (models.CreateCardShowTokenResponse, error)
 }

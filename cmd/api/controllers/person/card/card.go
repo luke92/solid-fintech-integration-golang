@@ -17,4 +17,7 @@ func RegisterRoutes(app fiber.Router, service solid.Service) {
 	routes := app.Group("/card")
 
 	routes.Post("/", h.AddCard)
+	routes.Patch("/:cardid/activate", h.ActivateCard)
+	routes.Post("/:cardid/pintoken", h.CreatePinTokenCard)
+	routes.Post("/:cardid/showtoken", h.CreateShowTokenCard)
 }

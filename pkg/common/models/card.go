@@ -103,6 +103,20 @@ const (
 	CardStatusPendingActivation CardStatus = "pendingActivation"
 )
 
+type ExpireCardData struct {
+	// Month with 2 digits (Example: 01)
+	ExpiryMonth string `json:"expiryMonth"`
+	// Year with 4 digits (Example: 2024)
+	ExpiryYear string `json:"expiryYear"`
+}
+
+// By default, a physical card is created as inactive. Use the Activate a Card endpoint to set its status to active. A virtual card is active on creation, hence it does not need to be activated.
+type ExpireAndLast4CardData struct {
+	ExpireCardData
+	// Last 4 digits of the card number
+	Last4 string `json:"last4"`
+}
+
 type CardDataFull struct {
 	ID string `json:"id"`
 	cardDataPartial
@@ -110,12 +124,7 @@ type CardDataFull struct {
 	ProgramID  string     `json:"programId"`
 	Cardholder Cardholder `json:"cardholder"`
 	Shipping   Shipping   `json:"shipping"`
-	// Month with 2 digits (Example: 01)
-	ExpiryMonth string `json:"expiryMonth"`
-	// Year with 4 digits (Example: 2024)
-	ExpiryYear string `json:"expiryYear"`
-	// Last 4 digits of the card number
-	Last4           string     `json:"last4"`
+	ExpireAndLast4CardData
 	CardStatus      CardStatus `json:"cardStatus"`
 	ActivatedAt     time.Time  `json:"activatedAt"`
 	CreatedAt       time.Time  `json:"createdAt"`
@@ -136,4 +145,35 @@ type CardDataFull struct {
 	BlockedMerchants []string `json:"blockedMerchants"`
 	WalletID         string   `json:"walletId"`
 	FamilyID         string   `json:"familyId"`
+}
+
+type ActivateCardResponse struct {
+	ID     string     `json:"id"`
+	Status CardStatus `json:"status"`
+}
+
+type CreateCardPinTokenResponse struct {
+	ID       string `json:"id"`
+	PinToken string `json:"pinToken"`
+}
+
+type CardSetNewPinRequest struct {
+	ExpireAndLast4CardData
+	Pin string `json:"pin"`
+}
+
+type CardSetNewPinResponse struct {
+	ID string `json:"id"`
+}
+
+type CreateCardShowTokenResponse struct {
+	ID        string `json:"id"`
+	ShowToken string `json:"showToken"`
+}
+
+type CardSecurityData struct {
+	ID         string `json:"id"`
+	CardNumber string `json:"cardNumber"`
+	Cvv        string `json:"cvv"`
+	ExpireCardData
 }
