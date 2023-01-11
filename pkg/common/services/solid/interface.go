@@ -20,4 +20,8 @@ type Service interface {
 	// Member
 
 	AddMember(personID string, model models.NewMemberData) (models.MemberDataFull, error)
+
+	// CARD
+
+	AddCard(personID string, model models.NewCard) (models.CardDataFull, error)
 }
