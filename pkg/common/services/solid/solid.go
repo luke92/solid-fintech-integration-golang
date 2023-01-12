@@ -80,7 +80,7 @@ func (service *SolidService) sendRequest(input sendRequestInput) (sendRequestOut
 			return output, err
 		}
 
-		fmt.Println("Error from Solid")
+		fmt.Println("Error handled by Solid")
 		output.ErrorSolid = &errorResponse
 	}
 

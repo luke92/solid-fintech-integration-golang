@@ -1,5 +1,7 @@
 package models
 
+import "time"
+
 type AddressType string
 
 const (
@@ -25,4 +27,19 @@ type Address struct {
 	Country string `json:"country"`
 	// postal code (60 characters max)
 	PostalCode string `json:"postalCode"`
+}
+
+type TimeWrapper struct {
+	time.Time
+}
+
+func (t *TimeWrapper) UnmarshalJSON(data []byte) error {
+	// Ignore null, like in the main JSON package.
+	if string(data) == "null" || string(data) == `""` {
+		return nil
+	}
+	// Fractional seconds are handled implicitly by Parse.
+	tt, err := time.Parse(`"`+time.RFC3339+`"`, string(data))
+	*t = TimeWrapper{tt}
+	return err
 }

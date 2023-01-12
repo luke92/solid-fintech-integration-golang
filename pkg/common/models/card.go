@@ -125,11 +125,12 @@ type CardDataFull struct {
 	Cardholder Cardholder `json:"cardholder"`
 	Shipping   Shipping   `json:"shipping"`
 	ExpireAndLast4CardData
-	CardStatus      CardStatus `json:"cardStatus"`
-	ActivatedAt     time.Time  `json:"activatedAt"`
-	CreatedAt       time.Time  `json:"createdAt"`
-	ModifiedAt      time.Time  `json:"modifiedAt"`
-	CreatedPersonID string     `json:"createdPersonId"`
+	CardStatus CardStatus `json:"cardStatus"`
+	// A virtual card is active on creation, Physical will have ActivatedAt after Activate Card
+	ActivatedAt     TimeWrapper `json:"activatedAt,omitempty"`
+	CreatedAt       time.Time   `json:"createdAt"`
+	ModifiedAt      time.Time   `json:"modifiedAt"`
+	CreatedPersonID string      `json:"createdPersonId"`
 	// an array of mcc codes to allow on the card. Example ["0742","0763"] https://github.com/greggles/mcc-codes/blob/main/mcc_codes.json
 	AllowedCategories []string `json:"allowedCategories"`
 	AvailableLimit    string   `json:"availableLimit"`
@@ -142,7 +143,7 @@ type CardDataFull struct {
 	// an array of merchant names to allow on the card. Example ["Subway","Campus Cafe"]
 	AllowedMerchants []string `json:"allowedMerchants"`
 	// 	an array of merchant names to allow on the card. Example ["Arco","Valero"]
-	BlockedMerchants []string `json:"blockedMerchants"`
+	BlockedMerchants []string `json:"blockedMerchants,omitempty"`
 	WalletID         string   `json:"walletId"`
 	FamilyID         string   `json:"familyId"`
 }
