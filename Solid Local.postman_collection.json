@@ -1,0 +1,482 @@
+{
+	"info": {
+		"_postman_id": "a7788f2e-09a3-4e60-86d0-429cf8f39e98",
+		"name": "Solid Local",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "5020687"
+	},
+	"item": [
+		{
+			"name": "1-PERSON",
+			"item": [
+				{
+					"name": "3-Family",
+					"item": [
+						{
+							"name": "Add Family",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var jsonData = pm.response.json();",
+											"pm.environment.set(\"familyId\", jsonData.id);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"{{$randomLastName}}\",\n    \"phone\": \"+17125928401\",\n    \"email\": \"lucasjv1992@gmail.com\",\n    \"address\": {\n        \"addressType\": \"mailing\",\n        \"line1\": \"1 Broadway\",\n        \"line2\": \"\",\n        \"city\": \"Los Gatos\",\n        \"state\": \"CA\",\n        \"country\": \"US\",\n        \"postalCode\": \"95030\"\n    }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://127.0.0.1:3000/v1/person/{{personId}}/family",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "3000",
+									"path": [
+										"v1",
+										"person",
+										"{{personId}}",
+										"family"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "4-Account",
+					"item": [
+						{
+							"name": "Add Account",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var jsonData = pm.response.json();",
+											"pm.environment.set(\"accountId\", jsonData.id);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"familyId\": \"{{familyId}}\",\n    \"label\": \"Primary\",\n    \"acceptedTerms\": true,\n    \"type\": \"personalChecking\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://127.0.0.1:3000/v1/person/{{personId}}/account",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "3000",
+									"path": [
+										"v1",
+										"person",
+										"{{personId}}",
+										"account"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Member",
+					"item": [
+						{
+							"name": "Add Member and Person",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var jsonData = pm.response.json();",
+											"pm.environment.set(\"memberId\", jsonData.id);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"familyId\": \"{{familyId}}\",\n    \"person\": {\n        \"firstName\": \"{{$randomFirstName}}\",\n        \"middleName\": \"\",\n        \"lastName\": \"{{$randomLastName}}\",\n        \"phone\": \"+17125929271\",\n        \"email\": \"lucasjv1992@gmail.com\",\n        \"dateOfBirth\": \"1974-04-22\",\n        \"idType\": \"ssn\",\n        \"idNumber\": \"287654321\",\n        \"address\": {\n            \"addressType\": \"mailing\",\n            \"line1\": \"789 Main St\",\n            \"line2\": \"\",\n            \"city\": \"New York\",\n            \"state\": \"NY\",\n            \"country\": \"US\",\n            \"postalCode\": \"10001\"\n        }\n    },\n    \"ownership\": \"50\",\n    \"title\": \"manager\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://127.0.0.1:3000/v1/person/{{personId}}/member",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "3000",
+									"path": [
+										"v1",
+										"person",
+										"{{personId}}",
+										"member"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Add Member With existing Person",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var jsonData = pm.response.json();",
+											"pm.environment.set(\"memberId\", jsonData.id);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"familyId\": \"{{familyId}}\",\n    \"personId\": \"{{otherPersonId}}\",\n    \"ownership\": \"50\",\n    \"title\": \"manager\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://127.0.0.1:3000/v1/person/{{personId}}/member",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "3000",
+									"path": [
+										"v1",
+										"person",
+										"{{personId}}",
+										"member"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "5-Card",
+					"item": [
+						{
+							"name": "Add Virtual Card",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var jsonData = pm.response.json();",
+											"pm.environment.set(\"cardId\", jsonData.id);",
+											"pm.environment.set(\"cardholderId\", jsonData.cardholder.id);",
+											"pm.environment.set(\"cardExpiryMonth\", jsonData.expiryMonth);",
+											"pm.environment.set(\"cardExpiryYear\", jsonData.expiryYear);",
+											"pm.environment.set(\"cardLast4\", jsonData.last4);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"cardType\": \"virtual\",\n    \"label\": \"Virtual Card\",\n    \"accountId\": \"{{accountId}}\",\n    \"currency\": \"USD\",\n    \"limitAmount\": \"120.00\",\n    \"limitInterval\": \"allTime\",\n    \"billingAddress\": {\n        \"addressType\": \"billing\",\n        \"line1\": \"164 Sugarloaf Drive\",\n        \"line2\": \"\",\n        \"city\": \"San Mateo\",\n        \"state\": \"CA\",\n        \"country\": \"US\",\n        \"postalCode\": \"94403\"\n    },\n    \"bin\": \"debit\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://127.0.0.1:3000/v1/person/{{personId}}/card",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "3000",
+									"path": [
+										"v1",
+										"person",
+										"{{personId}}",
+										"card"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Add Physical Card Copy",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var jsonData = pm.response.json();",
+											"pm.environment.set(\"cardId\", jsonData.id);",
+											"pm.environment.set(\"cardholderId\", jsonData.cardholder.id);",
+											"pm.environment.set(\"cardExpiryMonth\", jsonData.expiryMonth);",
+											"pm.environment.set(\"cardExpiryYear\", jsonData.expiryYear);",
+											"pm.environment.set(\"cardLast4\", jsonData.last4);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"cardType\": \"physical\",\n    \"label\": \"Physical Card\",\n    \"accountId\": \"{{accountId}}\",\n    \"currency\": \"USD\",\n    \"limitAmount\": \"200.00\",\n    \"limitInterval\": \"allTime\",\n    \"billingAddress\": {\n        \"addressType\": \"billing\",\n        \"line1\": \"164 Sugarloaf Drive\",\n        \"line2\": \"\",\n        \"city\": \"San Mateo\",\n        \"state\": \"CA\",\n        \"country\": \"US\",\n        \"postalCode\": \"94403\"\n    },\n    \"shipping\": {\n        \"shippingAddress\": {\n            \"addressType\": \"shipping\",\n            \"line1\": \"164 Sugarloaf Drive\",\n            \"line2\": \"\",\n            \"city\": \"San Mateo\",\n            \"state\": \"CA\",\n            \"country\": \"US\",\n            \"postalCode\": \"94403\"\n        }\n    },\n    \"bin\": \"debit\",\n    \"embossingPerson\": \"{{$randomFullName}}\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://127.0.0.1:3000/v1/person/{{personId}}/card",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "3000",
+									"path": [
+										"v1",
+										"person",
+										"{{personId}}",
+										"card"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "6-Activate Card",
+							"request": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"expiryMonth\": \"{{cardExpiryMonth}}\",\n    \"expiryYear\": \"{{cardExpiryYear}}\",\n    \"last4\": \"{{cardLast4}}\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://127.0.0.1:3000/v1/person/{{personId}}/card/{{cardId}}/activate",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "3000",
+									"path": [
+										"v1",
+										"person",
+										"{{personId}}",
+										"card",
+										"{{cardId}}",
+										"activate"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Add Person",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"pm.environment.set(\"personId\", jsonData.id);",
+									"var jsonData = pm.response.json();",
+									"pm.environment.set(\"sd-person-id\", jsonData.id);",
+									"pm.environment.set(\"programId\", jsonData.programId);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"firstName\": \"{{$randomFirstName}}\",\n    \"middleName\": \"\",\n    \"lastName\": \"{{$randomLastName}}\",\n    \"phone\": \"+17125928401\",\n    \"email\": \"lucasjv1992@gmail.com\",\n    \"dateOfBirth\": \"1974-04-22\",\n    \"idNumber\": \"292581232\",\n    \"idType\": \"ssn\",\n    \"address\": {\n        \"addressType\": \"mailing\",\n        \"line1\": \"1 Broadway\",\n        \"line2\": \"\",\n        \"city\": \"Los Gatos\",\n        \"state\": \"CA\",\n        \"country\": \"US\",\n        \"postalCode\": \"95030\"\n    },\n    \"metadata\": {\n        \"user\": \"{{$randomFullName}}\"\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:3000/v1/person",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "3000",
+							"path": [
+								"v1",
+								"person"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "2-Submit KYC",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"pm.environment.set(\"kycId\", jsonData.id);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:3000/v1/person/{{personId}}/kyc",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "3000",
+							"path": [
+								"v1",
+								"person",
+								"{{personId}}",
+								"kyc"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Submit IDV",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:3000/v1/person/{{personId}}/idv",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "3000",
+							"path": [
+								"v1",
+								"person",
+								"{{personId}}",
+								"idv"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
