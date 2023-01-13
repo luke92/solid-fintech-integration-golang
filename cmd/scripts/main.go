@@ -2,6 +2,10 @@ package main
 
 import (
 	"flag"
+	"log"
+
+	"github.com/luke92/solid-fintech-integration-golang/pkg/common/config"
+	"github.com/luke92/solid-fintech-integration-golang/pkg/common/services/solid"
 )
 
 var (
@@ -22,4 +26,11 @@ var (
 )
 
 func main() {
+	c, err := config.LoadConfig()
+
+	if err != nil {
+		log.Fatalln("Failed at config", err)
+	}
+
+	solid.NewSolidService(c.SolidEnv, c.SolidAPIKey)
 }
