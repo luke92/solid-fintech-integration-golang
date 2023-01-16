@@ -116,20 +116,12 @@ type Transaction struct {
 	Sell              interface{} `json:"sell"`
 	EnrichedData      struct {
 		Merchant struct {
-			Name    string `json:"name"`
-			Email   string `json:"email"`
-			Phone   string `json:"phone"`
-			Website string `json:"website"`
-			Logo    string `json:"logo"`
-			Address struct {
-				AddressType string `json:"addressType"`
-				Line1       string `json:"line1"`
-				Line2       string `json:"line2"`
-				City        string `json:"city"`
-				State       string `json:"state"`
-				Country     string `json:"country"`
-				PostalCode  string `json:"postalCode"`
-			} `json:"address"`
+			Name     string  `json:"name"`
+			Email    string  `json:"email"`
+			Phone    string  `json:"phone"`
+			Website  string  `json:"website"`
+			Logo     string  `json:"logo"`
+			Address  Address `json:"address"`
 			Location struct {
 				Latitude  string `json:"latitude"`
 				Longitude string `json:"longitude"`
