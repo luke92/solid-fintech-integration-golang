@@ -12,7 +12,7 @@ type IntrabankContactDataFull struct {
 }
 
 type AchContactDataPartial struct {
-	AccountNumber string `json:"accountNumber"`
+	IntrabankContactDataPartial
 	RoutingNumber string `json:"routingNumber"`
 	AccountType   string `json:"accountType"`
 	BankName      string `json:"bankName"`
@@ -42,9 +42,9 @@ type DebitCard struct {
 	Last4       string `json:"last4"`
 	ExpiryMonth string `json:"expiryMonth"`
 	// 	CVV code (required for debit pull verification)
-	CVV        string      `json:"cvv"`
-	ExpiryYear string      `json:"expiryYear"`
-	Address    interface{} `json:"address"`
+	CVV        string  `json:"cvv"`
+	ExpiryYear string  `json:"expiryYear"`
+	Address    Address `json:"address"`
 	//	if debit pull is enabled or disabled by the debit card issuer
 	Pull interface{} `json:"pull"`
 	// if debit push is enabled or disabled by the debit card issuer
@@ -106,4 +106,9 @@ type BankInfo struct {
 	Type           AccountBankType `json:"type"`
 	PaymentMethods []string        `json:"paymentMethods"`
 	Address        Address         `json:"address"`
+}
+
+type DebitCardTokenResponse struct {
+	ID             string `json:"id"`
+	DebitCardToken string `json:"debitCardToken"`
 }

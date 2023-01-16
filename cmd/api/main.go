@@ -23,6 +23,7 @@ func main() {
 	service := solid.NewSolidService(c.SolidEnv, c.SolidAPIKey)
 	IBankingService := bankingService.NewBankingService(service)
 
+	// HEALTH CHECK
 	app.Get("/", func(c *fiber.Ctx) error {
 		return c.Status(fiber.StatusOK).JSON(fiber.Map{
 			"msg": "Service running.",
