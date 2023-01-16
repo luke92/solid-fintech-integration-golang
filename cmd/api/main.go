@@ -8,6 +8,7 @@ import (
 	"github.com/luke92/solid-fintech-integration-golang/cmd/api/controllers/person"
 	"github.com/luke92/solid-fintech-integration-golang/pkg/common/config"
 	"github.com/luke92/solid-fintech-integration-golang/pkg/common/services/solid"
+	bankingService "github.com/luke92/solid-fintech-integration-golang/pkg/usecase/banking"
 )
 
 func main() {
@@ -20,6 +21,7 @@ func main() {
 	app := fiber.New()
 
 	service := solid.NewSolidService(c.SolidEnv, c.SolidAPIKey)
+	IBankingService := bankingService.NewBankingService(service)
 
 	app.Get("/", func(c *fiber.Ctx) error {
 		return c.Status(fiber.StatusOK).JSON(fiber.Map{
@@ -34,7 +36,7 @@ func main() {
 	})
 
 	person.RegisterRoutes(v1, service)
-	bankingController.RegisterRoutes(v1, service)
+	bankingController.RegisterRoutes(v1, IBankingService)
 
 	err = app.Listen(c.Port)
 	if err != nil {

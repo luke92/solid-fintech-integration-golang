@@ -4,7 +4,7 @@ import (
 	"fmt"
 
 	"github.com/luke92/solid-fintech-integration-golang/pkg/common/models"
-	"github.com/luke92/solid-fintech-integration-golang/pkg/internal/types"
+	"github.com/luke92/solid-fintech-integration-golang/pkg/types"
 )
 
 func (b *BankingService) AddPersonAndFamily(input types.AddPersonAndFamilyInput) (types.AddPersonAndFamilyOutput, error) {

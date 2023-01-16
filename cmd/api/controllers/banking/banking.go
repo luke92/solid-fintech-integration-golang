@@ -2,16 +2,16 @@ package banking
 
 import (
 	"github.com/gofiber/fiber/v2"
-	"github.com/luke92/solid-fintech-integration-golang/pkg/common/services/solid"
+	"github.com/luke92/solid-fintech-integration-golang/pkg/usecase"
 )
 
 type handlerBanking struct {
-	service solid.Service
+	bankingService usecase.IBankingService
 }
 
-func RegisterRoutes(app fiber.Router, service solid.Service) {
+func RegisterRoutes(app fiber.Router, service usecase.IBankingService) {
 	h := &handlerBanking{
-		service: service,
+		bankingService: service,
 	}
 
 	routes := app.Group("/banking")

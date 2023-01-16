@@ -3,25 +3,26 @@ package banking
 import (
 	"github.com/gofiber/fiber/v2"
 	"github.com/luke92/solid-fintech-integration-golang/cmd/api/controllers"
-	"github.com/luke92/solid-fintech-integration-golang/pkg/common/models"
+	"github.com/luke92/solid-fintech-integration-golang/pkg/types"
 )
 
 func (h handlerBanking) AddFamily(c *fiber.Ctx) error {
-	body := models.PersonDataPartial{}
+	ctx := "add-family"
+	input := types.AddPersonAndFamilyInput{}
 
 	// parse body, attach to AddBookRequestBody struct
-	if err := c.BodyParser(&body); err != nil {
+	if err := c.BodyParser(&input); err != nil {
 		errResponse := controllers.ErrorResponse{
-			Title:   "add-person-parse-request",
+			Title:   ctx + "-parse-request",
 			Message: err.Error(),
 		}
 		return c.Status(fiber.StatusBadRequest).JSON(errResponse)
 	}
 
-	response, err := h.service.AddPerson(body)
+	response, err := h.bankingService.AddPersonAndFamily(input)
 	if err != nil {
 		errResponse := controllers.ErrorResponse{
-			Title:   "add-person-service",
+			Title:   ctx + "-service",
 			Message: err.Error(),
 		}
 		return c.Status(fiber.StatusInternalServerError).JSON(errResponse)

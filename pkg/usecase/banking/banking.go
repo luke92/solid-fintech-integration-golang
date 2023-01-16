@@ -2,7 +2,7 @@ package banking
 
 import (
 	"github.com/luke92/solid-fintech-integration-golang/pkg/common/services/solid"
-	"github.com/luke92/solid-fintech-integration-golang/pkg/internal/usecase"
+	"github.com/luke92/solid-fintech-integration-golang/pkg/usecase"
 )
 
 type BankingService struct {
