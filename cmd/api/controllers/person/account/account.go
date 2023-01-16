@@ -17,4 +17,5 @@ func RegisterRoutes(app fiber.Router, service solid.Service) {
 	routes := app.Group("/account")
 
 	routes.Post("/", h.AddAccount)
+	routes.Get("/", h.GetAccounts)
 }

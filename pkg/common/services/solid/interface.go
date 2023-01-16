@@ -16,6 +16,7 @@ type Service interface {
 	// Account
 
 	AddAccount(personID string, model models.AccountDataPartial) (models.AccountDataFull, error)
+	GetAccounts(personID string) (models.List[models.AccountDataFull], error)
 
 	// Member
 

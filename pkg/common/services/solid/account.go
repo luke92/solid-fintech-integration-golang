@@ -44,3 +44,35 @@ func (service *SolidService) AddAccount(personID string, model models.AccountDat
 
 	return response, nil
 }
+
+func (service *SolidService) GetAccounts(personID string) (models.List[models.AccountDataFull], error) {
+	var response models.List[models.AccountDataFull]
+	ctxError := "get-accounts"
+
+	relativeURL := fmt.Sprintf("/v1/account?personId=%s", personID)
+	method := "GET"
+
+	input := sendRequestInput{
+		Method:      method,
+		RelativeURL: relativeURL,
+		PersonId:    personID,
+	}
+
+	output, err := service.sendRequest(input)
+	if err != nil {
+		fmt.Println(ctxError+"-send-request", err)
+		return response, err
+	}
+
+	if output.ErrorSolid != nil {
+		return response, output.ErrorSolid.ToError()
+	}
+
+	err = json.Unmarshal(output.Data, &response)
+	if err != nil {
+		fmt.Println(ctxError + "-parse-response")
+		return response, err
+	}
+
+	return response, nil
+}

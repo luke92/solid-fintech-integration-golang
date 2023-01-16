@@ -16,5 +16,5 @@ func RegisterRoutes(app fiber.Router, service usecase.IBankingService) {
 
 	routes := app.Group("/banking")
 
-	routes.Post("/", h.AddFamily)
+	routes.Post("/family", h.AddFamily)
 }
