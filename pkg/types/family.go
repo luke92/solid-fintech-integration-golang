@@ -8,5 +8,6 @@ type AddPersonAndFamilyOutput struct {
 	PersonID string `json:"personId"`
 	KYCID    string `json:"kycId"`
 	IdvID    string `json:"idvId"`
+	IdvURL   string `json:"idvUrl"`
 	FamilyID string `json:"familyId"`
 }

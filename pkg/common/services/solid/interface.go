@@ -28,4 +28,10 @@ type Service interface {
 	ActivateCard(personID string, cardID string, model models.ExpireAndLast4CardData) (models.ActivateCardResponse, error)
 	CreatePinTokenCard(personID string, cardID string) (models.CreateCardPinTokenResponse, error)
 	CreateShowTokenCard(personID string, cardID string) (models.CreateCardShowTokenResponse, error)
+
+	// CONTACT
+
+	AddContact(personID string, model models.ContactDataPartial) (models.ContactDataFull, error)
+	GetContacts(personID string, accountID string) (models.List[models.ContactDataFull], error)
+	GetBankInfo(personID string, accountType models.AccountBankType, routingNumber string) (models.BankInfo, error)
 }

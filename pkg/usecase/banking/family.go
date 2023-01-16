@@ -34,6 +34,7 @@ func (b *BankingService) AddPersonAndFamily(input types.AddPersonAndFamilyInput)
 	}
 
 	output.IdvID = idv.ID
+	output.IdvURL = idv.URL
 
 	newFamily := models.FamilyDataPartial{
 		Name:    input.LastName,
