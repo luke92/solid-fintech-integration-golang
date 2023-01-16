@@ -4,6 +4,7 @@ import (
 	"log"
 
 	"github.com/gofiber/fiber/v2"
+	bankingController "github.com/luke92/solid-fintech-integration-golang/cmd/api/controllers/banking"
 	"github.com/luke92/solid-fintech-integration-golang/cmd/api/controllers/person"
 	"github.com/luke92/solid-fintech-integration-golang/pkg/common/config"
 	"github.com/luke92/solid-fintech-integration-golang/pkg/common/services/solid"
@@ -33,6 +34,7 @@ func main() {
 	})
 
 	person.RegisterRoutes(v1, service)
+	bankingController.RegisterRoutes(v1, service)
 
 	err = app.Listen(c.Port)
 	if err != nil {
