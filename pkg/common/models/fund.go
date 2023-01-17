@@ -12,19 +12,19 @@ type FundIntrabankRequest struct {
 	Metadata    interface{} `json:"metadata"`
 }
 
-type FundAchType string
+type AchType string
 
 const (
-	AchTypeSameDay FundAchType = "sameDay"
-	AchTypeNextDay FundAchType = "nextDay"
-	AchTypeNone    FundAchType = ""
+	AchTypeSameDay AchType = "sameDay"
+	AchTypeNextDay AchType = "nextDay"
+	AchTypeNone    AchType = ""
 )
 
 // Used for Send or Receive Ach
 type FundAchRequest struct {
 	FundIntrabankRequest
 	// You can also pass the type for the ACH (sameDay, nextDay). Default is nextDay
-	Type FundAchType `json:"type"`
+	Type AchType `json:"type"`
 }
 
 type FundAccountType string

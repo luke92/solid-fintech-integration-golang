@@ -72,6 +72,42 @@ const (
 	TransferStatusSettled  TransferStatus = "settled"
 )
 
+type TransactionAch struct {
+	TransactionIntrabank
+	Type        AchType `json:"type"`
+	TraceNumber string  `json:"traceNumber"`
+	AuthID      string  `json:"authId"`
+}
+
+type TransactionIntrabank struct {
+	TransferID    string `json:"transferId"`
+	ContactID     string `json:"contactId"`
+	Name          string `json:"name"`
+	RoutingNumber string `json:"routingNumber"`
+	BankName      string `json:"bankName"`
+}
+
+type Location struct {
+	Latitude  string `json:"latitude"`
+	Longitude string `json:"longitude"`
+}
+
+type Merchant struct {
+	Name     string   `json:"name"`
+	Email    string   `json:"email"`
+	Phone    string   `json:"phone"`
+	Website  string   `json:"website"`
+	Logo     string   `json:"logo"`
+	Address  Address  `json:"address"`
+	Location Location `json:"location"`
+}
+
+type EnrichedData struct {
+	Merchant        Merchant      `json:"merchant"`
+	ChartOfAccounts []interface{} `json:"chartOfAccounts"`
+	Labels          []interface{} `json:"labels"`
+}
+
 type Transaction struct {
 	ID           string          `json:"id"`
 	TxnType      TransactionType `json:"txnType"`
@@ -91,47 +127,23 @@ type Transaction struct {
 	ParentTransferID string         `json:"parentTransferId"`
 	ParentTxnID      string         `json:"parentTxnId"`
 	// https://global-uploads.webflow.com/616c7256b52c543a920623bd/62bd0bf5ea57f8ea867aab30_Solid%20Transfer%20Review%20Code%20Matrix.pdf
-	ReviewCode    string      `json:"reviewCode"`
-	ReviewMessage string      `json:"reviewMessage"`
-	Intrabank     interface{} `json:"intrabank"`
-	Ach           struct {
-		TransferID    string `json:"transferId"`
-		ContactID     string `json:"contactId"`
-		Name          string `json:"name"`
-		RoutingNumber string `json:"routingNumber"`
-		Type          string `json:"type"`
-		BankName      string `json:"bankName"`
-		TraceNumber   string `json:"traceNumber"`
-		AuthID        string `json:"authId"`
-	} `json:"ach"`
-	Card              interface{} `json:"card"`
-	DomesticWire      interface{} `json:"domesticWire"`
-	InternationalWire interface{} `json:"internationalWire"`
-	DigitalCheck      interface{} `json:"digitalCheck"`
-	PhysicalCheck     interface{} `json:"physicalCheck"`
-	DebitCard         interface{} `json:"debitCard"`
-	SolidCard         interface{} `json:"solidCard"`
-	CrossBorder       interface{} `json:"crossBorder"`
-	Buy               interface{} `json:"buy"`
-	Sell              interface{} `json:"sell"`
-	EnrichedData      struct {
-		Merchant struct {
-			Name     string  `json:"name"`
-			Email    string  `json:"email"`
-			Phone    string  `json:"phone"`
-			Website  string  `json:"website"`
-			Logo     string  `json:"logo"`
-			Address  Address `json:"address"`
-			Location struct {
-				Latitude  string `json:"latitude"`
-				Longitude string `json:"longitude"`
-			} `json:"location"`
-		} `json:"merchant"`
-		ChartOfAccounts []interface{} `json:"chartOfAccounts"`
-		Labels          []interface{} `json:"labels"`
-	} `json:"enrichedData"`
-	CreatedAt  time.Time   `json:"createdAt"`
-	ModifiedAt time.Time   `json:"modifiedAt"`
-	TxnDate    time.Time   `json:"txnDate"`
-	Metadata   interface{} `json:"metadata"`
+	ReviewCode        string                `json:"reviewCode"`
+	ReviewMessage     string                `json:"reviewMessage"`
+	Intrabank         *TransactionIntrabank `json:"intrabank"`
+	Ach               TransactionAch        `json:"ach"`
+	Card              interface{}           `json:"card"`
+	DomesticWire      interface{}           `json:"domesticWire"`
+	InternationalWire interface{}           `json:"internationalWire"`
+	DigitalCheck      interface{}           `json:"digitalCheck"`
+	PhysicalCheck     interface{}           `json:"physicalCheck"`
+	DebitCard         interface{}           `json:"debitCard"`
+	SolidCard         interface{}           `json:"solidCard"`
+	CrossBorder       interface{}           `json:"crossBorder"`
+	Buy               interface{}           `json:"buy"`
+	Sell              interface{}           `json:"sell"`
+	EnrichedData      EnrichedData          `json:"enrichedData"`
+	CreatedAt         time.Time             `json:"createdAt"`
+	ModifiedAt        time.Time             `json:"modifiedAt"`
+	TxnDate           time.Time             `json:"txnDate"`
+	Metadata          interface{}           `json:"metadata"`
 }
