@@ -130,7 +130,7 @@ type Transaction struct {
 	ReviewCode        string                `json:"reviewCode"`
 	ReviewMessage     string                `json:"reviewMessage"`
 	Intrabank         *TransactionIntrabank `json:"intrabank"`
-	Ach               TransactionAch        `json:"ach"`
+	Ach               *TransactionAch       `json:"ach"`
 	Card              interface{}           `json:"card"`
 	DomesticWire      interface{}           `json:"domesticWire"`
 	InternationalWire interface{}           `json:"internationalWire"`
